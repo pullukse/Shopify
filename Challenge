@@ -1,35 +1,23 @@
-# Question 1
-a.	The result of $3145.13 comes from taking the average of the order_amount column. 
-However, we must calculate AOV based on the total revenue from the month divided by total orders placed that month i.e., $357.92.
-b. I would suggest analyzing: 
-  i.Store performance: sales per store sliced by order_amount, total_items, created_at to evaluate store performance throughout the month
-  ii.Method performance: sales per user sliced by total_items, order_amount, payment_method to see if method has any role in sales performance 
-  iii.User performance: sales per user sliced by order_amount, total_items, created_at to evaluate user spending throughout the month
-c.	See answer a
+SELECT COUNT(OrderID)
+FROM [Orders]
+WHERE ShipperID = '1';
 
-#Question 2
-a.	SELECT COUNT(OrderID)
-    FROM [Orders]
-    WHERE ShipperID = '1'
 
-Result is 54
 
-b.	SELECT Orders.EmployeeID,
-    COUNT(OrderID),
-    Employees.LastName
-    FROM Employees
-    INNER JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID
-    GROUP BY Orders.EmployeeID,Employees.LastName
+SELECT Orders.EmployeeID,
+COUNT(OrderID),
+Employees.LastName
+FROM Employees
+INNER JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID
+GROUP BY Orders.EmployeeID,Employees.LastName;
 
-Employee with the last name Peacock has the most orders i.e., 40
 
-c.	SELECT Country, ProductID, SUM(Quantity) AS TOTAL
-    FROM ((Orders
-    INNER JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID)
-    INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
-    WHERE Country = 'Germany'
-    GROUP BY OrderDetails.ProductID
-    ORDER BY TOTAL DESC;
+SELECT Country, ProductID, SUM(Quantity) AS TOTAL
+FROM ((Orders
+INNER JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID)
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+WHERE Country = 'Germany'
+GROUP BY OrderDetails.ProductID
+ORDER BY TOTAL DESC;
 
-Product ID 40 i.e., Boston Crab Meat, is ordered the most in Germany with a total of 160
 
